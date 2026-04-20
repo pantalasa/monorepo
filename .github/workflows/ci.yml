@@ -12,7 +12,7 @@ on:
 jobs:
   placeholder:
     name: placeholder
-      runs-on: lunar
+    runs-on: lunar
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
