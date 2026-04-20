@@ -37,3 +37,5 @@ Each service has its own README with run instructions. The CI workflow is a plac
 Changes to shared compliance go through a documented review process described in `compliance/policies/`. Service changes follow the service's own README.
 
 <!-- Trigger collectors with the new lunar-config -->
+
+<!-- Trigger collectors under the pantalasa lunar-config -->
