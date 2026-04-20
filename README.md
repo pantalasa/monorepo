@@ -39,3 +39,5 @@ Changes to shared compliance go through a documented review process described in
 <!-- Trigger collectors with the new lunar-config -->
 
 <!-- Trigger collectors under the pantalasa lunar-config -->
+
+<!-- fresh trigger under 4-component manifest v2 -->
