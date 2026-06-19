@@ -1,0 +1,18 @@
+name: compliance-ci
+on:
+  push:
+    branches: ["**"]
+
+# Method 3: ciPipelines. This workflow's name (compliance-ci) matches
+# ciPipelines: ["compliance-ci"] on the .../monorepo/compliance component in
+# pantalasa/lunar, so the agent attributes this job to compliance with no
+# LUNAR_COMPONENT / LUNAR_COMPONENT_INFER set.
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: compliance
+    steps:
+      - uses: actions/checkout@v4
+      - run: /bin/echo "lunar-qa::ci-pipelines"

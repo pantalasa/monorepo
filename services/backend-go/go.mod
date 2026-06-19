@@ -1,3 +1,3 @@
 module github.com/pantalasa/monorepo/services/backend-go
 
-go 1.22
+go 1.21

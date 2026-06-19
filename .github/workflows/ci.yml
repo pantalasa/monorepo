@@ -1,22 +1,53 @@
 name: GH-Actions
 on:
   push:
-    branches:
-      - "**"
-    tags:
-      - "v*"
-  pull_request:
-    branches:
-      - "**"
+    branches: ["**"]
 
+# Monorepo CI -> component attribution QA. Each job exercises one attribution
+# method in ci/observe.go:selectComponents and emits a `/bin/echo
+# lunar-qa::<method>` marker (a real binary the agent's tracer sees; the shell
+# builtin echo is invisible). The qa-marker collector records the token under
+# the resolved component's `.qa.markers.<method>`. `runs-on` is rewritten to the
+# localdev runner label by the e2e branch-copy (localdev/github/branches.go).
 jobs:
-  placeholder:
-    name: placeholder
-    runs-on: lunar
+  # Method 1: explicit single component.
+  explicit-single:
+    runs-on: ubuntu-latest
+    env:
+      LUNAR_COMPONENT: services/backend-go
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: No-op
-        run: |
-          echo "Monorepo CI placeholder - per-service CI coming once Lunar monorepo CI support lands."
-          exit 0
+      - uses: actions/checkout@v4
+      - run: /bin/echo "lunar-qa::explicit-single"
+
+  # Method 2: explicit comma-separated (attributed to both at once).
+  explicit-multi:
+    runs-on: ubuntu-latest
+    env:
+      LUNAR_COMPONENT: "services/backend-go,compliance"
+    steps:
+      - uses: actions/checkout@v4
+      - run: /bin/echo "lunar-qa::explicit-multi"
+
+  # Method 4: INFER via changed paths. Runs at repo root (cwd can't resolve);
+  # attribution comes from the commit's changed files intersecting a component
+  # path. Exercised by probe A (touches services/api-python).
+  infer-changed-paths:
+    runs-on: ubuntu-latest
+    env:
+      LUNAR_COMPONENT_INFER: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - run: /bin/echo "lunar-qa::infer-changed-paths"
+
+  # Method 5: INFER via process cwd. working-directory pins the traced process
+  # to a subdir; resolves via cwd only when changed-paths is empty (probe B).
+  infer-cwd:
+    runs-on: ubuntu-latest
+    env:
+      LUNAR_COMPONENT_INFER: "true"
+    defaults:
+      run:
+        working-directory: services/api-python
+    steps:
+      - uses: actions/checkout@v4
+      - run: /bin/echo "lunar-qa::infer-cwd"
