@@ -3,3 +3,4 @@ probe A TEST_ID=usxe3kqo 1782504121
 probe A TEST_ID=edgetest 1782518106
 probe A TEST_ID=h2trace 1782542648
 probe A TEST_ID=buftest 1782543861
+probe A TEST_ID=diagtest 1782544873
