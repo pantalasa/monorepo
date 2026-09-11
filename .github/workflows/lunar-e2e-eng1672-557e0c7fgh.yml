@@ -1,0 +1,12 @@
+name: lunar-e2e-eng1672-557e0c7fgh
+on:
+  push:
+    branches: ["localdev-e2e-test-34647581919-e2e"]
+    paths:
+      - compliance/eng-1672-557e0c7fgh.txt
+jobs:
+  hold-open:
+    runs-on: localdev-e2e-test-34647581919-e2e
+    steps:
+      - name: Keep the workflow incomplete during the release check
+        run: sleep 300
