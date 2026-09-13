@@ -1,0 +1,9 @@
+name: untouched-component-3c381f91gh
+on:
+  push:
+    branches: ["localdev-e2e-test-34781063518-e2e"]
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Workflow completion without component B inputs"
